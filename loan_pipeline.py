@@ -7,8 +7,9 @@ import plotly.express as px
 from numerize.numerize import numerize
 import plotly.graph_objects as go
 from calendar import month_name
+from data_preprocessing import df
 
-loan_pipeline_df = pd.read_pickle("Loan Pipeline.pkl")
+loan_pipeline_df = df
 
 # Set page configuration
 st.set_page_config(
