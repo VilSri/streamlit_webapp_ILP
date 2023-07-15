@@ -1,6 +1,7 @@
 import datetime
 import pandas as pd
 import numpy as np
+from zipfile import ZipFile
 from st_aggrid import AgGrid, GridUpdateMode, JsCode, GridOptionsBuilder, ColumnsAutoSizeMode
 import streamlit as st
 import plotly.express as px
@@ -8,7 +9,10 @@ from numerize.numerize import numerize
 import plotly.graph_objects as go
 from calendar import month_name
 
-loan_pipeline_df = pd.read_pickle("Loan Pipeline.pkl")
+with ZipFile('Loan Pipeline pkl.zip', 'r') as zObject:
+    pickle_file = zObject.extract('Loan Pipeline.pkl')
+    
+loan_pipeline_df = pd.read_pickle(pickle_file)
 
 # Set page configuration
 st.set_page_config(
