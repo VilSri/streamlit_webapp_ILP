@@ -51,7 +51,7 @@ session_state = SessionState(
 header_left, header_mid, header_right = st.columns([1, 2, 1], gap = 'large')
 
 with header_mid:
-    st.markdown("<h1 style='font-size: 34px; align: center; padding-bottom: 5px;'><b>Intelligent Loan Pipeline Management</b></h1>", unsafe_allow_html = True)
+    st.markdown("<h1 style='font-size: 22px; align: center; padding-bottom: 5px;'><b>Intelligent Loan Pipeline Management</b></h1>", unsafe_allow_html = True)
 st.divider()
 
 # Create the sidebar filters with cached values
