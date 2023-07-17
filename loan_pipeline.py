@@ -291,7 +291,7 @@ with tab2:
         }
         """)
 
-    st.markdown("<h3 style='text-align: center; font-size: 25px; padding-top: 45px; color: grey;'>Loan Progress</h3>", unsafe_allow_html = True)
+    st.markdown("<h3 style='text-align: center; font-size: 25px; padding-top: 45px;'>Loan Progress</h3>", unsafe_allow_html = True)
     gb_loan_progress.configure_default_column(min_column_width = 110, resizable = True, filterable = True, sortable = True, editable = False, groupable = True)
     gb_loan_progress.configure_column(field = "Loan Type", header_name = "Loan Type", wrapHeaderText = True, autoHeaderHeight = True)
     gb_loan_progress.configure_column(field = "Loan Number", header_name = "Loan Number", wrapHeaderText = True, autoHeaderHeight = True, sort = 'asc')
@@ -308,9 +308,9 @@ with tab2:
     gb_loan_progress.configure_column(field = "Borrower Intent to Continue Date", header_name = "Borrower Intent to Continue Date", wrapHeaderText = True, autoHeaderHeight = True)
     grid_options_loan_progress = gb_loan_progress.build()
     loan_progress_table = AgGrid(loan_progress_df, gridOptions = grid_options_loan_progress, columns_auto_size_mode = ColumnsAutoSizeMode.FIT_ALL_COLUMNS_TO_VIEW, fit_columns_on_grid_load = True, height = 400, allow_unsafe_jscode = True)
-    st.markdown("<h6 style = font-size: 5px; color: grey;'>Pending -- Awaits document to be submitted &emsp; Closed -- Loan process is completed</h6>", unsafe_allow_html = True)
+    st.markdown("<h6 style = font-size: 5px;'>Pending -- Awaits document to be submitted &emsp; Closed -- Loan process is completed</h6>", unsafe_allow_html = True)
     
-    st.markdown("<h3 style='text-align: center; font-size: 25px; padding-top: 45px; color: grey;'>Document Expiration Alerts by Loans</h3>", unsafe_allow_html = True)
+    st.markdown("<h3 style='text-align: center; font-size: 25px; padding-top: 45px;'>Document Expiration Alerts by Loans</h3>", unsafe_allow_html = True)
     gb_document_expiration_alerts.configure_default_column(min_column_width = 110, resizable = True, filterable = True, sortable = True, editable = False, groupable = True)
     gb_document_expiration_alerts.configure_column(field = "Loan Number", header_name = "Loan Number", wrapHeaderText = True, sort = 'asc', autoHeaderHeight = True)
     gb_document_expiration_alerts.configure_column(field = "ExpRate Lock1", header_name = "Rate Lock", cellStyle = cellstyle_jscode_document_expiration_alerts, wrapHeaderText = True, autoHeaderHeight = True)
@@ -323,10 +323,10 @@ with tab2:
     gb_document_expiration_alerts.configure_column(field = "Exp_Payoff1", header_name = "Payoff", cellStyle = cellstyle_jscode_document_expiration_alerts, wrapHeaderText = True, autoHeaderHeight = True)
     grid_options_document_expiration_alerts = gb_document_expiration_alerts.build()
     document_expiration_alerts_table = AgGrid(document_expiration_alerts_df, gridOptions = grid_options_document_expiration_alerts, columns_auto_size_mode = ColumnsAutoSizeMode.FIT_ALL_COLUMNS_TO_VIEW, fit_columns_on_grid_load = True, height = 400, allow_unsafe_jscode = True)
-    st.markdown("<h6 style = font-size: 5px; color: grey;'>Expired -- Time lapsed to submit the documents</h6>", unsafe_allow_html = True)
-    st.markdown("<h6 style = font-size: 5px; color: grey;'>Expiring Soon -- Time lapse to submit the documents within 10 days</h6>", unsafe_allow_html = True)
-    st.markdown("<h6 style = font-size: 5px; color: grey;'>Not Expired -- Time lapse to submit the document is more than 10 days</h6>", unsafe_allow_html = True)
-    st.markdown("<h6 style = font-size: 5px; color: grey;'>Pending -- Awaits document to be submitted</h6>", unsafe_allow_html = True)
+    st.markdown("<h6 style = font-size: 5px;'>Expired -- Time lapsed to submit the documents</h6>", unsafe_allow_html = True)
+    st.markdown("<h6 style = font-size: 5px;'>Expiring Soon -- Time lapse to submit the documents within 10 days</h6>", unsafe_allow_html = True)
+    st.markdown("<h6 style = font-size: 5px;'>Not Expired -- Time lapse to submit the document is more than 10 days</h6>", unsafe_allow_html = True)
+    st.markdown("<h6 style = font-size: 5px;'>Pending -- Awaits document to be submitted</h6>", unsafe_allow_html = True)
 
 with tab3:
    # Predefined list of questions and corresponding answers
