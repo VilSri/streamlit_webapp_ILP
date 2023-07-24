@@ -209,9 +209,20 @@ with tab1:
         st.plotly_chart(last_finished_milestone_fig, use_container_width = True)
                     
 with tab2:
-    gb_loan_progress = GridOptionsBuilder.from_dataframe(loan_progress_df)
-    gb_document_expiration_alerts = GridOptionsBuilder.from_dataframe(document_expiration_alerts_df)
+    @st.cache_data
+    def get_data_loan_progress():
+        return loan_progress_df
     
+    def get_data_document_expiration_alerts():
+        return document_expiration_alerts_df
+    
+    # Get the data using the caching function
+    frequent_data_loan_progress = get_data_loan_progress()
+    frequent_data_document_expiration_alerts = get_data_document_expiration_alerts()
+    
+    gb_loan_progress = GridOptionsBuilder.from_dataframe(frequent_data_loan_progress)
+    gb_document_expiration_alerts = GridOptionsBuilder.from_dataframe(frequent_data_document_expiration_alerts)
+        
     cellstyle_jscode_loan_progress = JsCode("""
         function(params) {
             var value = params.value;
