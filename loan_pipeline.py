@@ -187,7 +187,7 @@ tab1, tab2, tab3 = st.tabs(["Key Metrics", "Loan Pipeline", "AI Assist"])
 
 # Render the tabs
 with tab1:
-    total1, total2, total3 = st.columns([1.25,1.25,1.5], gap = 'large')
+    total1, total2, total3 = st.columns([1,1.25,1.75], gap = 'large')
     
     with total1:
         milestone_date_approval_value = [milestone_date_approval, milestone_date_submittal]
