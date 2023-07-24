@@ -206,125 +206,130 @@ with tab1:
         st.plotly_chart(last_finished_milestone_fig, use_container_width = True)
                     
 with tab2:
-    @st.cache_data
-    def get_data_loan_progress():
-        return loan_progress_df
+    with st.container():
+        @st.cache_data
+        def get_data_loan_progress():
+            return loan_progress_df
     
-    def get_data_document_expiration_alerts():
-        return document_expiration_alerts_df
+        # Get the data using the caching function
+        frequent_data_loan_progress = get_data_loan_progress()
     
-    # Get the data using the caching function
-    frequent_data_loan_progress = get_data_loan_progress()
-    frequent_data_document_expiration_alerts = get_data_document_expiration_alerts()
-    
-    gb_loan_progress = GridOptionsBuilder.from_dataframe(frequent_data_loan_progress)
-    gb_document_expiration_alerts = GridOptionsBuilder.from_dataframe(frequent_data_document_expiration_alerts)
-        
-    cellstyle_jscode_loan_progress = JsCode("""
-        function(params) {
-            var value = params.value;
-            if (params.value === 'Closed') {
-                return {
-                    'color': 'black',
-                    'backgroundColor': 'lime'
-                };
+        gb_loan_progress = GridOptionsBuilder.from_dataframe(frequent_data_loan_progress)
+
+        cellstyle_jscode_loan_progress = JsCode("""
+            function(params) {
+                var value = params.value;
+                if (params.value === 'Closed') {
+                    return {
+                        'color': 'black',
+                        'backgroundColor': 'lime'
+                    };
+                }
+                if (params.value === 'Pending') {
+                    return {
+                        'color': 'black',
+                        'backgroundColor': 'yellow'
+                    };
+                }
+                if (value > 0 && value <50) {
+                    return {
+                        'color': 'black',
+                        'backgroundColor': 'red'
+                    };
+                }
+                if (value >= 50 && value < 100) {
+                    return {
+                        'color': 'black',
+                        'backgroundColor': 'yellow'
+                    };
+                }
+                if (value == 100) {
+                    return {
+                        'color': 'black',
+                        'backgroundColor': 'lime'
+                    };
+                }
+                return null;
             }
-            if (params.value === 'Pending') {
-                return {
-                    'color': 'black',
-                    'backgroundColor': 'yellow'
-                };
-            }
-            if (value > 0 && value <50) {
-                return {
-                    'color': 'black',
-                    'backgroundColor': 'red'
-                };
-            }
-            if (value >= 50 && value < 100) {
-                return {
-                    'color': 'black',
-                    'backgroundColor': 'yellow'
-                };
-            }
-            if (value == 100) {
-                return {
-                    'color': 'black',
-                    'backgroundColor': 'lime'
-                };
-            }
-            return null;
-        }
         """)
     
-    cellstyle_jscode_document_expiration_alerts = JsCode("""
-        function(params) {
-            var value = params.value;
-            if (params.value === 'Expired') {
-                return {
-                    'color': 'black',
-                    'backgroundColor': 'red'
-                };
+        st.markdown("<h3 style = 'text-align: center; font-size: 25px; padding-top: 45px;'>Loan Progress</h3>", unsafe_allow_html = True)
+        gb_loan_progress.configure_default_column(min_column_width = 110, resizable = True, filterable = True, sortable = True, editable = False, groupable = True)
+        gb_loan_progress.configure_column(field = "Loan Type", header_name = "Loan Type", wrapHeaderText = True, autoHeaderHeight = True)
+        gb_loan_progress.configure_column(field = "Loan Number", header_name = "Loan Number", wrapHeaderText = True, autoHeaderHeight = True, sort = 'asc')
+        gb_loan_progress.configure_column(field = "Progress", header_name = "Progress (%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
+        gb_loan_progress.configure_column(field = "ExpRate Lock", header_name = "Rate Lock (10%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
+        gb_loan_progress.configure_column(field = "ExpAppraisal", header_name = "Appraisal (20%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
+        gb_loan_progress.configure_column(field = "Exp_Title", header_name = "Title (20%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
+        gb_loan_progress.configure_column(field = "ExpCredit_Exp", header_name = "Credit Exp (15%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
+        gb_loan_progress.configure_column(field = "Exp_VVOE", header_name = "VVOE (5%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
+        gb_loan_progress.configure_column(field = "Exp_HOI", header_name = "HOI (5%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
+        gb_loan_progress.configure_column(field = "Exp_Payoff", header_name = "Payoffs (10%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
+        gb_loan_progress.configure_column(field = "Exp_Income", header_name = "Income Exp (15%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
+        gb_loan_progress.configure_column(field = "Aging", header_name = "Aging", wrapHeaderText = True, autoHeaderHeight = True)
+        gb_loan_progress.configure_column(field = "Borrower Intent to Continue Date", header_name = "Borrower Intent to Continue Date", wrapHeaderText = True, autoHeaderHeight = True)
+        grid_options_loan_progress = gb_loan_progress.build()
+        loan_progress_table = AgGrid(frequent_data_loan_progress, gridOptions = grid_options_loan_progress, columns_auto_size_mode = ColumnsAutoSizeMode.FIT_ALL_COLUMNS_TO_VIEW, fit_columns_on_grid_load = True, height = 400, allow_unsafe_jscode = True)
+        st.markdown("<h6 style = font-size: 5px;'>Pending -- Awaits document to be submitted &emsp; Closed -- Loan process is completed</h6>", unsafe_allow_html = True)
+
+    with st.container():
+        @st.cache_data
+        def get_data_document_expiration_alerts():
+            return document_expiration_alerts_df
+    
+        # Get the data using the caching function
+        frequent_data_document_expiration_alerts = get_data_document_expiration_alerts()
+
+        gb_document_expiration_alerts = GridOptionsBuilder.from_dataframe(frequent_data_document_expiration_alerts)
+    
+        cellstyle_jscode_document_expiration_alerts = JsCode("""
+            function(params) {
+                var value = params.value;
+                if (params.value === 'Expired') {
+                    return {
+                        'color': 'black',
+                        'backgroundColor': 'red'
+                    };
+                }
+                if (params.value === 'Expiring Soon') {
+                    return {
+                        'color': 'black',
+                        'backgroundColor': 'yellow'
+                    };
+                }
+                if (params.value === 'Not Expired') {
+                    return {
+                        'color': 'black',
+                        'backgroundColor': 'lime'
+                    };
+                }
+                if (params.value === 'Pending') {
+                    return {
+                        'color': 'black',
+                        'backgroundColor': 'lightgray'
+                    };
+                }
+                return null;
             }
-            if (params.value === 'Expiring Soon') {
-                return {
-                    'color': 'black',
-                    'backgroundColor': 'yellow'
-                };
-            }
-            if (params.value === 'Not Expired') {
-                return {
-                    'color': 'black',
-                    'backgroundColor': 'lime'
-                };
-            }
-            if (params.value === 'Pending') {
-                return {
-                    'color': 'black',
-                    'backgroundColor': 'lightgray'
-                };
-            }
-            return null;
-        }
         """)
 
-    st.markdown("<h3 style = 'text-align: center; font-size: 25px; padding-top: 45px;'>Loan Progress</h3>", unsafe_allow_html = True)
-    gb_loan_progress.configure_default_column(min_column_width = 110, resizable = True, filterable = True, sortable = True, editable = False, groupable = True)
-    gb_loan_progress.configure_column(field = "Loan Type", header_name = "Loan Type", wrapHeaderText = True, autoHeaderHeight = True)
-    gb_loan_progress.configure_column(field = "Loan Number", header_name = "Loan Number", wrapHeaderText = True, autoHeaderHeight = True, sort = 'asc')
-    gb_loan_progress.configure_column(field = "Progress", header_name = "Progress (%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
-    gb_loan_progress.configure_column(field = "ExpRate Lock", header_name = "Rate Lock (10%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
-    gb_loan_progress.configure_column(field = "ExpAppraisal", header_name = "Appraisal (20%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
-    gb_loan_progress.configure_column(field = "Exp_Title", header_name = "Title (20%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
-    gb_loan_progress.configure_column(field = "ExpCredit_Exp", header_name = "Credit Exp (15%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
-    gb_loan_progress.configure_column(field = "Exp_VVOE", header_name = "VVOE (5%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
-    gb_loan_progress.configure_column(field = "Exp_HOI", header_name = "HOI (5%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
-    gb_loan_progress.configure_column(field = "Exp_Payoff", header_name = "Payoffs (10%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
-    gb_loan_progress.configure_column(field = "Exp_Income", header_name = "Income Exp (15%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
-    # gb_loan_progress.configure_column(field = "Aging", header_name = "Aging", wrapHeaderText = True, autoHeaderHeight = True)
-    gb_loan_progress.configure_column(field = "Borrower Intent to Continue Date", header_name = "Borrower Intent to Continue Date", wrapHeaderText = True, autoHeaderHeight = True)
-    grid_options_loan_progress = gb_loan_progress.build()
-    loan_progress_table = AgGrid(frequent_data_loan_progress, gridOptions = grid_options_loan_progress, columns_auto_size_mode = ColumnsAutoSizeMode.FIT_ALL_COLUMNS_TO_VIEW, fit_columns_on_grid_load = True, height = 400, allow_unsafe_jscode = True)
-    st.markdown("<h6 style = font-size: 5px;'>Pending -- Awaits document to be submitted &emsp; Closed -- Loan process is completed</h6>", unsafe_allow_html = True)
-    
-    st.markdown("<h3 style='text-align: center; font-size: 25px; padding-top: 45px;'>Document Expiration Alerts by Loans</h3>", unsafe_allow_html = True)
-    gb_document_expiration_alerts.configure_default_column(min_column_width = 110, resizable = True, filterable = True, sortable = True, editable = False, groupable = True)
-    gb_document_expiration_alerts.configure_column(field = "Loan Number", header_name = "Loan Number", wrapHeaderText = True, sort = 'asc', autoHeaderHeight = True)
-    gb_document_expiration_alerts.configure_column(field = "ExpRate Lock1", header_name = "Rate Lock", cellStyle = cellstyle_jscode_document_expiration_alerts, wrapHeaderText = True, autoHeaderHeight = True)
-    gb_document_expiration_alerts.configure_column(field = "ExpAppraisal1", header_name = "Appraisal", cellStyle = cellstyle_jscode_document_expiration_alerts, wrapHeaderText = True, autoHeaderHeight = True)
-    gb_document_expiration_alerts.configure_column(field = "Exp_Title1", header_name = "Title", cellStyle = cellstyle_jscode_document_expiration_alerts, wrapHeaderText = True, autoHeaderHeight = True)
-    gb_document_expiration_alerts.configure_column(field = "ExpCredit_Exp1", header_name = "Credit", cellStyle = cellstyle_jscode_document_expiration_alerts, wrapHeaderText = True, autoHeaderHeight = True)
-    gb_document_expiration_alerts.configure_column(field = "Exp_HOI1", header_name = "HOI", cellStyle = cellstyle_jscode_document_expiration_alerts, wrapHeaderText = True, autoHeaderHeight = True)
-    gb_document_expiration_alerts.configure_column(field = "Exp_VVOE1", header_name = "VVOE", cellStyle = cellstyle_jscode_document_expiration_alerts, wrapHeaderText = True, autoHeaderHeight = True)
-    gb_document_expiration_alerts.configure_column(field = "Exp_Income1", header_name = "Income", cellStyle = cellstyle_jscode_document_expiration_alerts, wrapHeaderText = True, autoHeaderHeight = True)
-    gb_document_expiration_alerts.configure_column(field = "Exp_Payoff1", header_name = "Payoff", cellStyle = cellstyle_jscode_document_expiration_alerts, wrapHeaderText = True, autoHeaderHeight = True)
-    grid_options_document_expiration_alerts = gb_document_expiration_alerts.build()
-    document_expiration_alerts_table = AgGrid(frequent_data_document_expiration_alerts, gridOptions = grid_options_document_expiration_alerts, columns_auto_size_mode = ColumnsAutoSizeMode.FIT_ALL_COLUMNS_TO_VIEW, fit_columns_on_grid_load = True, height = 400, allow_unsafe_jscode = True)
-    st.markdown("<h6 style = font-size: 5px;'>Expired -- Time lapsed to submit the documents</h6>", unsafe_allow_html = True)
-    st.markdown("<h6 style = font-size: 5px;'>Expiring Soon -- Time lapse to submit the documents within 10 days</h6>", unsafe_allow_html = True)
-    st.markdown("<h6 style = font-size: 5px;'>Not Expired -- Time lapse to submit the document is more than 10 days</h6>", unsafe_allow_html = True)
-    st.markdown("<h6 style = font-size: 5px;'>Pending -- Awaits document to be submitted</h6>", unsafe_allow_html = True)
-
+        st.markdown("<h3 style='text-align: center; font-size: 25px; padding-top: 45px;'>Document Expiration Alerts by Loans</h3>", unsafe_allow_html = True)
+        gb_document_expiration_alerts.configure_default_column(min_column_width = 110, resizable = True, filterable = True, sortable = True, editable = False, groupable = True)
+        gb_document_expiration_alerts.configure_column(field = "Loan Number", header_name = "Loan Number", wrapHeaderText = True, sort = 'asc', autoHeaderHeight = True)
+        gb_document_expiration_alerts.configure_column(field = "ExpRate Lock1", header_name = "Rate Lock", cellStyle = cellstyle_jscode_document_expiration_alerts, wrapHeaderText = True, autoHeaderHeight = True)
+        gb_document_expiration_alerts.configure_column(field = "ExpAppraisal1", header_name = "Appraisal", cellStyle = cellstyle_jscode_document_expiration_alerts, wrapHeaderText = True, autoHeaderHeight = True)
+        gb_document_expiration_alerts.configure_column(field = "Exp_Title1", header_name = "Title", cellStyle = cellstyle_jscode_document_expiration_alerts, wrapHeaderText = True, autoHeaderHeight = True)
+        gb_document_expiration_alerts.configure_column(field = "ExpCredit_Exp1", header_name = "Credit", cellStyle = cellstyle_jscode_document_expiration_alerts, wrapHeaderText = True, autoHeaderHeight = True)
+        gb_document_expiration_alerts.configure_column(field = "Exp_HOI1", header_name = "HOI", cellStyle = cellstyle_jscode_document_expiration_alerts, wrapHeaderText = True, autoHeaderHeight = True)
+        gb_document_expiration_alerts.configure_column(field = "Exp_VVOE1", header_name = "VVOE", cellStyle = cellstyle_jscode_document_expiration_alerts, wrapHeaderText = True, autoHeaderHeight = True)
+        gb_document_expiration_alerts.configure_column(field = "Exp_Income1", header_name = "Income", cellStyle = cellstyle_jscode_document_expiration_alerts, wrapHeaderText = True, autoHeaderHeight = True)
+        gb_document_expiration_alerts.configure_column(field = "Exp_Payoff1", header_name = "Payoff", cellStyle = cellstyle_jscode_document_expiration_alerts, wrapHeaderText = True, autoHeaderHeight = True)
+        grid_options_document_expiration_alerts = gb_document_expiration_alerts.build()
+        document_expiration_alerts_table = AgGrid(frequent_data_document_expiration_alerts, gridOptions = grid_options_document_expiration_alerts, columns_auto_size_mode = ColumnsAutoSizeMode.FIT_ALL_COLUMNS_TO_VIEW, fit_columns_on_grid_load = True, height = 400, allow_unsafe_jscode = True)
+        st.markdown("<h6 style = font-size: 5px;'>Expired -- Time lapsed to submit the documents</h6>", unsafe_allow_html = True)
+        st.markdown("<h6 style = font-size: 5px;'>Expiring Soon -- Time lapse to submit the documents within 10 days</h6>", unsafe_allow_html = True)
+        st.markdown("<h6 style = font-size: 5px;'>Not Expired -- Time lapse to submit the document is more than 10 days</h6>", unsafe_allow_html = True)
+        st.markdown("<h6 style = font-size: 5px;'>Pending -- Awaits document to be submitted</h6>", unsafe_allow_html = True)
 with tab3:
    # Predefined list of questions and corresponding answers
     questions = ["What is the productivity of loan processing over last 3 months?", 
