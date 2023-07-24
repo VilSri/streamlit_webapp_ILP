@@ -6,9 +6,6 @@ from st_aggrid import AgGrid, JsCode, GridOptionsBuilder, ColumnsAutoSizeMode
 from numerize.numerize import numerize
 from calendar import month_name
 
-with ZipFile('loan_pipeline_pkl_file.zip', 'r') as zObject:
-    pickle_file = zObject.extract('Loan Pipeline.pkl')
-
 loan_pipeline_df = pd.read_pickle("Loan Pipeline.pkl")
 
 # Set page configurations
