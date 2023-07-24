@@ -187,7 +187,7 @@ tab1, tab2, tab3 = st.tabs(["Key Metrics", "Loan Pipeline", "AI Assist"])
 
 # Render the tabs
 with tab1:
-    total1, total2, total3 = st.columns([1,1,2], gap = 'large')
+    total1, total2, total3 = st.columns([1.25,1.25,1.5], gap = 'large')
     
     with total1:
         milestone_date_approval_value = [milestone_date_approval, milestone_date_submittal]
@@ -198,7 +198,7 @@ with tab1:
         
     with total2:
         clear_to_close_applications_value = [clear_to_close_applications, milestone_date_approval]
-        clear_to_close_applications_fig = go.Figure(data = [go.Pie(labels = ["Clear to Close Applications", "Milestone Date Approval"], values = clear_to_close_applications_value, hole = 0.7, title = "Clear to Close Application")])
+        clear_to_close_applications_fig = go.Figure(data = [go.Pie(labels = ["Clear to Close Applications", "Milestone Date Approval"], values = clear_to_close_applications_value, hole = 0.7, title = "Clear to Close Applications (Approval")])
         clear_to_close_applications_fig.update_traces(hoverinfo = 'label+value', textfont_size = 15, marker = dict(colors = ["DodgerBlue", "MediumBlue"]))
         clear_to_close_applications_fig.update_layout(showlegend = False)
         st.plotly_chart(clear_to_close_applications_fig, use_container_width = True)
