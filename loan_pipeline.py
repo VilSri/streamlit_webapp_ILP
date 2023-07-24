@@ -120,7 +120,7 @@ with st.sidebar:
     session_state.last_finished_milestone = last_finished_milestone
 
 # Apply the filters to the dataframe
-filtered_data = df.query('`Extracted Year (GFE Application Date)` in @selected_year and `Extracted Month (GFE Application Date)` in @selected_month and `Loan Officer` in @loan_officer and `Loan Processor` in @loan_processor and `Loan Closer` in @loan_closer and `Loan Source` in @loan_source and `Loan Type` in @loan_type and `Last Finished Milestone` in @last_finished_milestone and `Progress` >= @selected_min_progress and `Progress` <= @selected_max_progress')
+filtered_data = df.query('`Extracted Year (Milestone Date - Submittal)` in @selected_year and `Extracted Month (Milestone Date - Submittal)` in @selected_month and `Loan Officer` in @loan_officer and `Loan Processor` in @loan_processor and `Loan Closer` in @loan_closer and `Loan Source` in @loan_source and `Loan Type` in @loan_type and `Last Finished Milestone` in @last_finished_milestone and `Progress` >= @selected_min_progress and `Progress` <= @selected_max_progress')
 
 # Metrics Definition
 borrower_intent_to_continue_date = int(filtered_data["GFE Application Date"].count()/2)
