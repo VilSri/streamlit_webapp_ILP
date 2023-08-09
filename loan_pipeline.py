@@ -233,19 +233,7 @@ with tab1:
                     
 with tab2:
     global productivity_applications_count_list, average_time_loan_type_list, efficiency_applications_count_list, error_applications_count_list, error_type_list, productivity_priority_button, efficiency_priority_button, accuracy_priority_button
-    
-    # @st.cache_data
-    # def get_data():
-    #     return filtered_data
-    # @st.cache_data
-    # def get_data_loan_progress():
-    #     return loan_progress_df
-    
-    # # Get the data using the caching function
-    # frequent_data_loan_progress = get_data_loan_progress()
-
-    # gb_loan_progress = GridOptionsBuilder.from_dataframe(frequent_data_loan_progress)
-        
+            
     @st.cache_data()
     def get_data_document_expiration_alerts():
         return document_expiration_alerts_df
@@ -253,15 +241,9 @@ with tab2:
     # Get the data using the caching function
     frequent_data_document_expiration_alerts = get_data_document_expiration_alerts()
 
-    # st.write('AI Suggestions')
-    # st.markdown("<h6 style = 'text-align: center; font-size: 25px; padding-top: 15px;'>AI Suggestions</h6>", unsafe_allow_html = True)
     with st.container():
         # st.write('AI Insights')
         col1, col2 = st.columns([0.5,3], gap = 'large')
-
-        # st.markdown("<span style='color:lightgreen'>AI Insights</span>", unsafe_allow_html=True)
-        
-        # st.markdown()
 
         with col1:
             st.write('')
@@ -275,9 +257,7 @@ with tab2:
             # Filter dataframe for AI suggestion
             suggestion_filter_df = filtered_data_grid[(filtered_data_grid["All Documents Received Status"] == "Yes") & (df["All Documents Expiration Status"] == "Not Expired") & (filtered_data_grid["Progress"] == 100)]
 
-            # productivity_average_time_to_complete = int(suggestion_filter_df["Time Taken (minutes)"].mean())
             productivity_total_time_to_complete = int(suggestion_filter_df["Time Taken (minutes)"].sum())
-            # productivity_total_applications = suggestion_filter_df["Time Taken (minutes)"].count()
 
             productivity_applications_count_list = []
             for i in range(len(suggestion_filter_df)):
@@ -290,41 +270,17 @@ with tab2:
             except:
                 pass
 
-            # efficiency_total_time_to_complete = int(efficiency_df["Time Taken (minutes)"].sum())
-            # efficiency_total_applications = efficiency_df["Time Taken (minutes)"].count()
-
-            # average_time_taken_groupby = suggestion_filter_df.groupby("Loan Type", as_index = False)
-            # average_time_loan_type = average_time_taken_groupby["Time Taken (minutes)"].mean()
-            
-            # average_time_loan_type_list = []
-            # for i in range(len(efficiency_df)):
-            #     if average_time_loan_type["Time Taken (minutes)"][i] <= 100:
-            #         average_time_loan_type_list.append(average_time_loan_type["Loan Type"][i])
-
             efficiency_applications_count_list = []
             for i in range(len(efficiency_df)):
                 efficiency_applications_count_list.append(efficiency_df.index[i])
-                # for j in range(len(average_time_loan_type_list)):
-                #     if suggestion_filter_df.iloc[i, suggestion_filter_df.columns.get_loc("Loan Type")] == average_time_loan_type_list[j]:
-                #         efficiency_applications_count_list.append(suggestion_filter_df.index[i])
 
             accuracy_df = suggestion_filter_df[suggestion_filter_df["Error Type"] != "No Error"]
-
-            # accuracy_average_time_to_complete = int(efficiency_df["Time Taken (minutes)"].mean())
-            # accuracy_total_time_to_complete = int(efficiency_df["Time Taken (minutes)"].sum())
-            # accuracy_total_applications = efficiency_df["Time Taken (minutes)"].count()
 
             error_applications_count_list = []
             error_type_list = []
             for i in range(len(accuracy_df)):
                 error_applications_count_list.append(accuracy_df.index[i])
                 error_type_list.append(accuracy_df.iloc[i, accuracy_df.columns.get_loc("Error Type")])
-                # if suggestion_filter_df.iloc[i, suggestion_filter_df.columns.get_loc("Application Status")] == "Error":
-                #     error_applications_count_list.append(suggestion_filter_df.index[i])
-                #     if suggestion_filter_df.iloc[i, suggestion_filter_df.columns.get_loc("Error Type")] not in error_type_list:
-                #         error_type_list.append(suggestion_filter_df.iloc[i, suggestion_filter_df.columns.get_loc("Error Type")])
-            # error_type_count_set = set(error_type_list)
-            # error_type_count_list = (list(error_type_count_set))
             calculate_most_frequent_error_type_list = Counter(error_type_list)
             most_frequent_error_type_list = calculate_most_frequent_error_type_list.most_common()
 
@@ -334,11 +290,6 @@ with tab2:
                     if most_frequent_error_type_list[i][0] not in most_frequent_error_type_selected_list:
                         most_frequent_error_type_selected_list.append(most_frequent_error_type_list[i][0])
 
-            # def get_error_type_count(len):
-            #     if len > 
-            # st.write(most_frequent_error_type_list[0][0])
-            # print(most_frequent_error_type_list[0][0])
-            # st.write(error_type_count_list)
             if len(error_applications_count_list) > 0:
                 if len(most_frequent_error_type_list) > 3:
                     error_type_string = ", ".join(most_frequent_error_type_selected_list)
@@ -389,22 +340,6 @@ with tab2:
                 else:
                     st.markdown("<h style = 'font-size: 13px;'>No suggestion</h>".format(loan_processor_string), unsafe_allow_html = True)
                 
-                # st.write("You have {} application/s with all the borrower documents ready in your pipeline.".format(len(productivity_applications_count_list)))
-                # st.write("You have {} application/s in your pipeline with an average time of 30 minutes to complete.".format(len(efficiency_applications_count_list)))
-                # st.write("You have {} application/s in your pipeline with issues {}.".format(len(error_applications_count_list), error_type_string))
-                # st.write(productivity_applications_count_list)
-                # st.dataframe(average_time_taken)
-                # st.write(average_time_loan_type)
-                # st.write(suggestion_filter_df)
-                # st.write(efficiency_df)
-                # st.write(efficiency_average_time_to_complete)
-                # st.write(average_time_loan_type_list)
-                # st.write(efficiency_applications_count_list)
-                # st.write(average_time_to_complete)
-                # st.write(total_time_to_complete)
-                # st.write(accuracy_df)
-                # st.write(suggestion_filter_df["Time Taken (minutes)"])
-                # st.write(suggestion_filter_df["Time Taken (minutes)"].sum())
                 st.write()
 
             with c2:
@@ -421,112 +356,8 @@ with tab2:
                 
                 if len(effective_applications_count_list) > 0:
                     effective_priority_button = st.button(label = "Priortize", key = "effective", help = "Click here to Priortize Applications", type = "primary")
-                
-            # st.markdown("<span style='color:lightgreen'>AI Suggestions</span>", unsafe_allow_html=True)
-            
-            # pending_loan_progress = frequent_data_loan_progress[frequent_data_loan_progress == 'Pending'].count().sum()
-            # closed = frequent_data_loan_progress[frequent_data_loan_progress == 'Closed'].count().sum()
-
-            # st.write("**Closed:** {}".format(closed), "&nbsp;&nbsp;&nbsp;&nbsp;**Pending:** {}".format(pending_loan_progress))
-            
-            # st.write('')
-            # st.markdown("<h6 style = 'font-size: 18px;'>In Document Expiration Alerts by Loans Table</h6>", unsafe_allow_html = True)
-            # expired_document_expiration_alerts = frequent_data_document_expiration_alerts[frequent_data_document_expiration_alerts == 'Expired'].count().sum()
-            # expiring_soon_document_expiration_alerts = frequent_data_document_expiration_alerts[frequent_data_document_expiration_alerts == 'Expiring Soon'].count().sum()
-            # not_expired_document_expiration_alerts = frequent_data_document_expiration_alerts[frequent_data_document_expiration_alerts == 'Not Expired'].count().sum()
-            # pending_document_expiration_alerts = frequent_data_document_expiration_alerts[frequent_data_document_expiration_alerts == 'Pending'].count().sum()
-            
-            # st.write("**Expired:** {}".format(expired_document_expiration_alerts), "&nbsp;&nbsp;&nbsp;&nbsp;**Expiring Soon:** {}".format(expiring_soon_document_expiration_alerts), "&nbsp;&nbsp;&nbsp;&nbsp;**Not Expired:** {}".format(not_expired_document_expiration_alerts), "&nbsp;&nbsp;&nbsp;&nbsp;**Pending:** {}".format(pending_document_expiration_alerts))
-                        
-            #  = ", ".join(sel_row_df["Loan Decision (Pred Confid)"].astype(str).tolist())
-            # Reason1s = ", ".join(sel_row_df["Reason1"].astype(str).tolist())
-            # Reason2s = ", ".join(sel_row_df["Reason2"].astype(str).tolist())
-            # Reason3s = ", ".join(sel_row_df["Reason3"].astype(str).tolist())
-            
-        # #with AIbox:
-        # sel_row = grid_table["selected_rows"]
-    
-        # # Convert sel_row to a dataframe
-        # sel_row_df = pd.DataFrame(sel_row)
-        # if not sel_row_df.empty:
-        #     # Fill missing values in "Loan Decision (Predicted)" column with an empty string
-        #     sel_row_df["Loan Decision (Predicted)"].fillna("", inplace=True)
-        #     Appids = ", ".join(sel_row_df["Application ID"].astype(str).tolist())
-        #     product_names = ", ".join(sel_row_df["Product Name"].tolist())
-        #     loan_decisions = ", ".join(sel_row_df["Loan Decision (Predicted)"].tolist())
-        #     confidences = ", ".join(sel_row_df["Loan Decision (Pred Confid)"].astype(str).tolist())
-        #     Reason1s = ", ".join(sel_row_df["Reason1"].astype(str).tolist())
-        #     Reason2s = ", ".join(sel_row_df["Reason2"].astype(str).tolist())
-        #     Reason3s = ", ".join(sel_row_df["Reason3"].astype(str).tolist())
-            
-        #     with st.container():
-        #         #st.write("")  # Empty line for line break
-        #         #st.write("")  # Empty line for line break
-        #         #st.write("")  # Empty line for line break
-        #         st.markdown("<h1 style='text-align: center; font-size: 20px; margin-top: 5px; margin-bottom: 0px;'>AI driven insights</h1>", unsafe_allow_html=True)
-        #         #st.markdown("---")
-        #         st.write("Selected Application: {}".format(Appids))
-        #         st.write("Product: {}".format(product_names))
-                
-        #         # Calculate SLA Breach Likelihood
-        #         sel_row_df["SLA Breach (Likelihood)"] = ((30 - sel_row_df["Time to Decide (days)"]) / 30)
-
-        #         # Retrieve the SLA Breach Likelihood value
-        #         SLA_breach_likelihood = sel_row_df["SLA Breach (Likelihood)"].iloc[0]
-
-        #         # Display SLA Breach Likelihood
-        #         SLA_breach_pct = round(SLA_breach_likelihood*100)
-        #         st.write("SLA Breach (Likelihood): {}%".format(SLA_breach_pct))
-        #         st.progress(SLA_breach_likelihood)
-
-        #         if "Approved" in loan_decisions:
-        #             st.markdown("<span style='color:lightgreen'>Predicted Decision: {}</span>".format(loan_decisions), unsafe_allow_html=True)
-        #         elif "Conditional Approval" in loan_decisions:
-        #             st.markdown("<span style='color:yellow'>Predicted Decision: {}</span>".format(loan_decisions), unsafe_allow_html=True)
-        #         elif "Rejected" in loan_decisions:
-        #             st.markdown("<span style='color:pink'>Predicted Decision: {}</span>".format(loan_decisions), unsafe_allow_html=True)
-        #         else:
-        #             st.write("Predicted Decision: {}".format(loan_decisions))
-                                
-        #         for confidence in confidences.split(","):
-        #             confidence = float(confidence)
-        #             normalized_confidence = confidence / 100.0  # Normalize confidence between 0 and 1
-        #             if confidence > 95:
-        #                 #st.markdown("<span style='color:green'>Prediction confidence: {}%</span>".format(confidence), unsafe_allow_html=True)
-        #                 st.write("Prediction confidence: {}%".format(confidence))
-        #                 st.progress(normalized_confidence)
-
-        #             elif 85 <= confidence <= 95:
-        #                 #st.markdown("<span style='color:yellow'>Prediction confidence: {}%</span>".format(confidence), unsafe_allow_html=True)
-        #                 st.write("Prediction confidence: {}%".format(confidence))
-        #                 st.progress(normalized_confidence)
-        #             else:
-        #                 #st.markdown("<span style='color:red'>Prediction confidence: {}%</span>".format(confidence), unsafe_allow_html=True)
-        #                 st.write("Prediction confidence: {}%".format(confidence))
-        #                 st.progress(normalized_confidence)
-
-        #         st.markdown("<h1 style='text-align: left; font-size: 18px; margin-top: 0px; margin-bottom: 0px;'>Influencing Reasons on Loan Decision</h1>", unsafe_allow_html=True)
-        #         st.markdown("     - R1: {}".format(Reason1s))
-        #         st.markdown("     - R2: {}".format(Reason2s))
-        #         st.markdown("     - R3: {}".format(Reason3s))
-        # else:
-        #     #st.write("Select an Application for AI insights.")
-        #    st.write("")  # Empty line for line break
-        #    st.write("")  # Empty line for line break
-        #    st.write("")  # Empty line for line break
-        #    st.write("")  # Empty line for line break
-        #    st.write("")  # Empty line for line break
-        #    st.write("")  # Empty line for line break
-        #    st.markdown("<h1 style='text-align: center; font-size: 25px; margin-top: 5px; margin-bottom: 0px;'>Select a case for AI insights</h1>", unsafe_allow_html=True)
-        #    #st.markdown("---")
-
-
+                    
     with st.container():
-        # @st.cache_data
-        # def get_data_loan_progress():
-        #     return loan_progress_df
-        # st.write(productivity_applications_count_list)
-        
         cellstyle_jscode_loan_progress = JsCode("""
             function(params) {
                 var value = params.value;
