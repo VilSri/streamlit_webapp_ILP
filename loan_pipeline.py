@@ -598,90 +598,8 @@ with tab2:
                 get_loan_progress_grid(filtered_data_df, 400)
         except:
             pass
-
-
             
-        # progress_filter_component = JsCode("""
-        #     # get filter instance
-        #     const progress_filter_commponent = gridOptions.api.getFilterInstance('progress'); 
-
-        #     # get filter model
-        #     const model = progress_filter_component.getModel(); 
-
-        #     # set filter model and update
-        #     progress_filter_component.setModel({ values: loan_progress_df["Progress"].unique() });
-
-        #     # refresh rows based on the filter (not automatic to allow for batching multiple filters)
-        #     gridOptions.api.onFilterChanged();
-        # """)
-
-        # progress_filter_onFirstDataRendered = JsCode("""
-        #     function progress_filter_onFirstDataRendered(parmas) {
-        #     # console.log('The grid is now ready');
-        #     var progressFilterComponent = parmas.api.getFilterInstance('Progress (%)');
-        #     progressFilterComponent.setModel({type: 'inRange', filter: loan_progress_df["Progress"].unique(), filterTo: null,});
-        #     parmas.api.onFilterChanged();
-        #     }
-        # """)
-
-        # options = {
-        # # "rowSelection": "multiple",
-        # # "rowMultiSelectWithClick": True,
-        # # "sideBar": ["columns", 'filters'],
-        # # "enableRangeSelection": True,
-        # "onFirstDataRendered": progress_filter_onFirstDataRendered
-        # }    
-
-# function onFirstDataRendered(parmas) {
-#   # console.log('The grid is now ready');
-#   var ageFilterComponent = parmas.api.getFilterInstance('age');
-#   ageFilterComponent.setModel({
-#     type: 'greaterThan',
-#     filter: 18,
-#     filterTo: null,
-#   });
-
-#   # get filter instance
-#             const progress_filter_commponent = gridOptions.api.getFilterInstance('progress'); 
-
-#             # get filter model
-#             const model = progress_filter_component.getModel(); 
-
-#             # set filter model and update
-#             progress_filter_component.setModel({ values: loan_progress_df["Progress"].unique() });
-
-#             # refresh rows based on the filter (not automatic to allow for batching multiple filters)
-#             gridOptions.api.onFilterChanged();
-
-#   parmas.api.onFilterChanged();
-# }
-        
-            # st.markdown("<h3 style = 'text-align: center; font-size: 25px; padding-top: 45px;'>Loan Progress</h3>", unsafe_allow_html = True)
-            # gb_loan_progress.configure_default_column(min_column_width = 110, resizable = True, filterable = True, sortable = True, groupable = True)
-            # gb_loan_progress.configure_column(field = "Loan Type", header_name = "Loan Type", wrapHeaderText = True, autoHeaderHeight = True)
-            # gb_loan_progress.configure_column(field = "Loan Number", header_name = "Loan Number", wrapHeaderText = True, autoHeaderHeight = True, sort = 'asc')
-            # gb_loan_progress.configure_column(field = "Progress", header_name = "Progress (%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
-            # gb_loan_progress.configure_column(field = "ExpRate Lock", header_name = "Rate Lock (10%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
-            # gb_loan_progress.configure_column(field = "ExpAppraisal", header_name = "Appraisal (20%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
-            # gb_loan_progress.configure_column(field = "Exp_Title", header_name = "Title (20%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
-            # gb_loan_progress.configure_column(field = "ExpCredit_Exp", header_name = "Credit Exp (15%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
-            # gb_loan_progress.configure_column(field = "Exp_VVOE", header_name = "VVOE (5%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
-            # gb_loan_progress.configure_column(field = "Exp_HOI", header_name = "HOI (5%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
-            # gb_loan_progress.configure_column(field = "Exp_Payoff", header_name = "Payoffs (10%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
-            # gb_loan_progress.configure_column(field = "Exp_Income", header_name = "Income Exp (15%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
-            # gb_loan_progress.configure_column(field = "Aging", header_name = "Aging", wrapHeaderText = True, autoHeaderHeight = True)
-            # gb_loan_progress.configure_column(field = "Borrower Intent to Continue Date", header_name = "Borrower Intent to Continue Date", wrapHeaderText = True, autoHeaderHeight = True)
-            # grid_options_loan_progress = gb_loan_progress.build()
-            # loan_progress_table = AgGrid(frequent_data_loan_progress, gridOptions = grid_options_loan_progress, columns_auto_size_mode = ColumnsAutoSizeMode.FIT_ALL_COLUMNS_TO_VIEW, fit_columns_on_grid_load = True, height = 400, reload_data = True, allow_unsafe_jscode = True)
-            # st.markdown("<h6 style = font-size: 5px;'>Closed -- Loan process is completed &emsp; Pending -- Awaits document to be submitted</h6>", unsafe_allow_html = True)
-
-
     with st.container():
-        # @st.cache_data
-        # def get_data_document_expiration_alerts():
-        #     return document_expiration_alerts_df
-    
-           
         gb_document_expiration_alerts = GridOptionsBuilder.from_dataframe(frequent_data_document_expiration_alerts)
     
         cellstyle_jscode_document_expiration_alerts = JsCode("""
@@ -738,7 +656,7 @@ with tab3:
     questions = ["What is the productivity of loan processing over last 3 months?", 
                  "Which type of application having high cycle time?"]
     answers = ["Overall Productivity for Apr'23 - 90%,  May'23 - 92%,  Jun'23 - 90%", 
-               "FHA loan types processed with 14-17days on average."]
+               "FHA loan types processed with 14-17 days on average."]
 
     # Display the text input and submit button
     user_text = st.text_input("Enter your question:")
