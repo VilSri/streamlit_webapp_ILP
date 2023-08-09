@@ -134,9 +134,9 @@ app_clear_to_close = int(filtered_data["GFE Application Date"].count()/4.5)
 app_suspended = int(filtered_data["GFE Application Date"].count()/5)
 
 # Calculate the count of each loan decision within the filtered data
-milestone_date_approval = filtered_data["Milestone Date - Approval"].count()
-milestone_date_submittal = filtered_data["Milestone Date - Submittal"].count()
-clear_to_close_applications = filtered_data["Milestone Date - Clear To Close"].count()
+milestone_date_approval = int(filtered_data["Milestone Date - Approval"].count() / 0.1)
+milestone_date_submittal = int(filtered_data["Milestone Date - Submittal"].count() / 0.15)
+clear_to_close_applications = int(filtered_data["Milestone Date - Clear To Close"].count() / 0.2)
 
 # Define the metrics
 last_finished_milestone_approval = int(filtered_data["Last Finished Milestone"].eq("Approval").sum())
