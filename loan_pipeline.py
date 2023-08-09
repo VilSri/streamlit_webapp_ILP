@@ -352,10 +352,10 @@ with tab2:
                     efficiency_priority_button = st.button(label = "Priortize", key = "efficiency", help = "Click here to Priortize Applications")
                 
                 if len(error_applications_count_list) > 0:
-                    accuracy_priority_button = st.button(label = "Priortize", key = "accuracy", help = "Please be Watchful while Processing!", type = "primary")
+                    accuracy_priority_button = st.button(label = "Priortize", key = "accuracy", help = "Please be Watchful while Processing!")
                 
                 if len(effective_applications_count_list) > 0:
-                    effective_priority_button = st.button(label = "Priortize", key = "effective", help = "Click here to Priortize Applications", type = "primary")
+                    effective_priority_button = st.button(label = "Priortize", key = "effective", help = "Click here to Priortize Applications")
                     
     with st.container():
         cellstyle_jscode_loan_progress = JsCode("""
