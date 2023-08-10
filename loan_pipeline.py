@@ -6,10 +6,10 @@ from zipfile import ZipFile
 from numerize.numerize import numerize
 from calendar import month_name
 
-with ZipFile('Loan Pipeline pkl.zip', 'r') as zObject:
-   pickle_file = zObject.extract('Loan Pipeline Pickle.pkl')
+with ZipFile('Loan Pipeline Pickle.zip', 'r') as zObject:
+   pickle_file = zObject.extract('Loan Pipeline.pkl')
 
-loan_pipeline_df = pd.read_pickle("Loan Pipeline.pkl")
+loan_pipeline_df = pd.read_pickle(pickle_file)
 
 # Set page configurations
 st.set_page_config(
