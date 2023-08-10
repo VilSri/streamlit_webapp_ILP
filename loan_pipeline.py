@@ -258,7 +258,7 @@ with tab2:
         gb_loan_progress.configure_default_column(min_column_width = 110, resizable = True, filterable = True, sortable = True, editable = False, groupable = True)
         gb_loan_progress.configure_column(field = "Loan Type", header_name = "Loan Type", wrapHeaderText = True, autoHeaderHeight = True)
         gb_loan_progress.configure_column(field = "Loan Number", header_name = "Loan Number", wrapHeaderText = True, autoHeaderHeight = True, sort = 'asc')
-        gb_loan_progress.configure_column(field = "Ageing", header_name = "Ageing (daays)", wrapHeaderText = True, autoHeaderHeight = True)
+        gb_loan_progress.configure_column(field = "Ageing", header_name = "Ageing (days)", wrapHeaderText = True, autoHeaderHeight = True)
         gb_loan_progress.configure_column(field = "Progress", header_name = "Progress (%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
         gb_loan_progress.configure_column(field = "ExpRate Lock", header_name = "Rate Lock (10%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
         gb_loan_progress.configure_column(field = "ExpAppraisal", header_name = "Appraisal (20%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
@@ -331,6 +331,7 @@ with tab2:
         st.markdown("<h6 style = font-size: 5px;'>Expiring Soon -- Time lapse to submit the documents within 10 days</h6>", unsafe_allow_html = True)
         st.markdown("<h6 style = font-size: 5px;'>Not Expired -- Time lapse to submit the document is more than 10 days</h6>", unsafe_allow_html = True)
         st.markdown("<h6 style = font-size: 5px;'>Pending -- Awaits document to be submitted</h6>", unsafe_allow_html = True)
+
 with tab3:
    # Predefined list of questions and corresponding answers
     questions = ["What is the productivity of loan processing over last 3 months?", 
