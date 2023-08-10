@@ -177,7 +177,7 @@ with total6:
     st.metric(label = "Application Suspended", value = numerize(app_suspended, decimals = 0))
 
 # Select and pre-process columns for loan progress table
-loan_progress_df = filtered_data[['Loan Type', 'Loan Number', 'Progress',  'ExpRate Lock', 'ExpAppraisal', 'Exp_Title', 'ExpCredit_Exp', 'Exp_VVOE', 'Exp_HOI', 'Exp_Payoff', 'Exp_Income', 'Aging', 'Borrower Intent to Continue Date']]
+loan_progress_df = filtered_data[['Loan Type', 'Loan Number', 'Progress',  'ExpRate Lock', 'ExpAppraisal', 'Exp_Title', 'ExpCredit_Exp', 'Exp_VVOE', 'Exp_HOI', 'Exp_Payoff', 'Exp_Income', 'Ageing', 'Borrower Intent to Continue Date']]
 
 # Select and preprocess columns for 'document expiration alerts by loans' table
 document_expiration_alerts_df = filtered_data[['Loan Number', 'ExpRate Lock1', 'ExpAppraisal1', 'Exp_Title1', 'ExpCredit_Exp1', 'Exp_HOI1', 'Exp_VVOE1', 'Exp_Income1', 'Exp_Payoff1']]
@@ -258,8 +258,9 @@ with tab2:
     
         st.markdown("<h3 style = 'text-align: center; font-size: 25px; padding-top: 45px;'>Loan Progress</h3>", unsafe_allow_html = True)
         gb_loan_progress.configure_default_column(min_column_width = 110, resizable = True, filterable = True, sortable = True, editable = False, groupable = True)
-        # gb_loan_progress.configure_column(field = "Loan Type", header_name = "Loan Type", wrapHeaderText = True, autoHeaderHeight = True)
+        gb_loan_progress.configure_column(field = "Loan Type", header_name = "Loan Type", wrapHeaderText = True, autoHeaderHeight = True)
         gb_loan_progress.configure_column(field = "Loan Number", header_name = "Loan Number", wrapHeaderText = True, autoHeaderHeight = True, sort = 'asc')
+        gb_loan_progress.configure_column(field = "Ageing", header_name = "Ageing", wrapHeaderText = True, autoHeaderHeight = True)
         gb_loan_progress.configure_column(field = "Progress", header_name = "Progress (%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
         gb_loan_progress.configure_column(field = "ExpRate Lock", header_name = "Rate Lock (10%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
         gb_loan_progress.configure_column(field = "ExpAppraisal", header_name = "Appraisal (20%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
@@ -269,7 +270,6 @@ with tab2:
         gb_loan_progress.configure_column(field = "Exp_HOI", header_name = "HOI (5%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
         gb_loan_progress.configure_column(field = "Exp_Payoff", header_name = "Payoffs (10%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
         gb_loan_progress.configure_column(field = "Exp_Income", header_name = "Income Exp (15%)", cellStyle = cellstyle_jscode_loan_progress, wrapHeaderText = True, autoHeaderHeight = True)
-        # gb_loan_progress.configure_column(field = "Aging", header_name = "Aging", wrapHeaderText = True, autoHeaderHeight = True)
         gb_loan_progress.configure_column(field = "Borrower Intent to Continue Date", header_name = "Borrower Intent to Continue Date", wrapHeaderText = True, autoHeaderHeight = True)
         grid_options_loan_progress = gb_loan_progress.build()
         loan_progress_table = AgGrid(frequent_data_loan_progress, gridOptions = grid_options_loan_progress, columns_auto_size_mode = ColumnsAutoSizeMode.FIT_ALL_COLUMNS_TO_VIEW, fit_columns_on_grid_load = True, height = 400, allow_unsafe_jscode = True)
